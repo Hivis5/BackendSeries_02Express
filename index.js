@@ -1,9 +1,10 @@
 import express from "express";
+import "dotenv/config";
 
 const app = express();
 
-const port = 3000;
-
+const port = process.env.PORT || 8000;
+const APIKey = process.env.APIKey || "Key Not Found";
 app.use(express.json());
 
 let myData = [];
@@ -39,7 +40,7 @@ app.put("/post/:id", (req, res) => {
 });
 app.delete("/post/:id", (req, res) => {
   const singleData = myData.findIndex(
-    (data) => data.id === parseInt(req.params.id),
+    (data) => data.id === parseInt(req.params.id)
   );
   if (!singleData) {
     return res.status(404).send("No Software Found");
@@ -49,5 +50,7 @@ app.delete("/post/:id", (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Server is running at port: ${port} using express`);
+  console.log(
+    `Server is running at port: ${port} using express and the APIKey is ${APIKey}`
+  );
 });
